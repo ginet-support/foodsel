@@ -1,0 +1,131 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. FOODSEL.
+       AUTHOR. NOAM KLOOS.
+       INSTALLATION. GENERIC-INDUSTRIES.
+       DATE-WRITTEN. JUN, 19, 2014.
+       DATE-COMPILED. 
+       SECURITY. PRIVATE.
+
+       ENVIRONMENT DIVISION.
+
+       CONFIGURATION SECTION.
+       SOURCE-COMPUTER. OPEN-COBOL-1-1.
+       OBJECT-COMPUTER. GENERIC.
+
+       SPECIAL-NAMES.
+              DECIMAL-POINT IS COMMA.
+
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL. 
+       		     SELECT LOG-OUT-DAT ASSIGN TO "foodsel.dat" 
+		     ORGANIZATION IS LINE SEQUENTIAL
+		     ACCESS IS SEQUENTIAL.
+	
+       DATA DIVISION.
+       FILE SECTION.
+       FD LOG-OUT-DAT LABEL RECORD IS STANDARD
+       DATA RECORD IS LOG-OUT-REC.
+       01 LOG-OUT-REC.
+	             10 DATE-ENTRY          PICTURE X(8).
+		     10 FILLER		    PICTURE X.
+		     10 WEIGHT		    PICTURE 999.
+		     10 FILLER		    PICTURE X.
+		     10 HAPPINESS	    PICTURE -9.
+		     10 FILLER              PICTURE X.
+		     10 STRESS		    PICTURE -9.
+		     10 FILLER		    PICTURE X.
+		     10 TEMPER		    PICTURE -9.
+		     10 FILLER		    PICTURE X.
+		     10 CLARITY		    PICTURE -9.
+		     10 FILLER              PICTURE X.
+		     10 HEALTH		    PICTURE -9.
+		     10 FILLER		    PICTURE X.
+		     10 ENERGY 		    PICTURE -9.
+		     10 FILLER		    PICTURE X.
+		     10 HUNGER		    PICTURE -9.
+       WORKING-STORAGE SECTION.
+
+       01 WS-LOG-OUT-REC.
+	             10 DATE-ENTRY          PICTURE X(8).
+		     10 FILLER		    PICTURE X VALUE X'09'.
+		     10 WEIGHT		    PICTURE Z99.
+		     10 FILLER		    PICTURE X VALUE X'09'.
+		     10 HAPPINESS	    PICTURE -9.
+		     10 FILLER              PICTURE X VALUE X'09'.
+		     10 STRESS		    PICTURE -9.
+		     10 FILLER		    PICTURE X VALUE X'09'.
+		     10 TEMPER		    PICTURE -9.
+		     10 FILLER		    PICTURE X VALUE X'09'.
+		     10 CLARITY		    PICTURE -9.
+		     10 FILLER              PICTURE X VALUE X'09'.
+		     10 HEALTH		    PICTURE -9.
+		     10 FILLER		    PICTURE X VALUE X'09'.
+		     10 ENERGY 		    PICTURE -9.
+		     10 FILLER		    PICTURE X VALUE X'09'.
+		     10 HUNGER		    PICTURE -9.
+		     
+       PROCEDURE DIVISION.
+	     
+       SINGLE-MODULE.
+		     OPEN EXTEND LOG-OUT-DAT.
+
+		     ACCEPT DATE-ENTRY OF WS-LOG-OUT-REC
+		     FROM DATE YYYYMMDD
+		     DISPLAY "WEIGHT: " WITH NO ADVANCING
+		     ACCEPT WEIGHT OF WS-LOG-OUT-REC
+		     DISPLAY "HAPPINESS: -2 DEPRESSED"
+		     DISPLAY "           -1 UNHAPPY"
+		     DISPLAY "            0 INDIFFERENT"
+		     DISPLAY "            1 HAPPY"
+		     DISPLAY "            2 DELIGHTED"
+		     DISPLAY "ENTER SCORE: " WITH NO ADVANCING 
+		     ACCEPT HAPPINESS OF WS-LOG-OUT-REC
+		     DISPLAY "STRESS:    -2 STRESSED"
+		     DISPLAY "           -1 TENSE"
+		     DISPLAY "            0 MANAGING"
+		     DISPLAY "            1 RELAXED"
+		     DISPLAY "            2 VERY RELAXED"
+		     DISPLAY "ENTER SCORE: " WITH NO ADVANCING
+		     ACCEPT STRESS OF WS-LOG-OUT-REC
+		     DISPLAY "TEMPER:    -2 ANGRY"
+		     DISPLAY "           -1 GRUMPY"
+		     DISPLAY "            0 NEUTRAL"
+		     DISPLAY "            1 CALM"
+		     DISPLAY "            2 PEACEFUL"
+		     DISPLAY "ENTER SCORE: " WITH NO ADVANCING
+		     ACCEPT TEMPER OF WS-LOG-OUT-REC
+		     DISPLAY "CLARITY:   -2 CHAOTIC"
+		     DISPLAY "           -1 CONFUSED"
+		     DISPLAY "            0 NEUTRAL"
+		     DISPLAY "            1 MOSTLY FOCUSED"
+		     DISPLAY "            2 CLEAR MINDED"
+		     DISPLAY "ENTER SCORE: " WITH NO ADVANCING
+		     ACCEPT CLARITY OF WS-LOG-OUT-REC
+		     DISPLAY "HEALTH:    -2 VERY SICK"
+		     DISPLAY "           -1 MILDLY SICK"
+		     DISPLAY "            0 NEUTRAL"
+		     DISPLAY "            1 HEALTHY"
+		     DISPLAY "            2 VERY HEALTHY"
+		     DISPLAY "ENTER SCORE: " WITH NO ADVANCING
+		     ACCEPT HEALTH OF WS-LOG-OUT-REC
+		     DISPLAY "ENERGY:    -2 WORN OUT"
+		     DISPLAY "           -1 TIRED"
+		     DISPLAY "            0 NEUTRAL"
+		     DISPLAY "            1 ENERGETIC"
+		     DISPLAY "            2 VERY ENERGETIC"
+		     DISPLAY "ENTER SCORE: " WITH NO ADVANCING
+		     ACCEPT ENERGY OF WS-LOG-OUT-REC
+		     DISPLAY "HUNGER:    -2 CRAVING"
+		     DISPLAY "           -1 HUNGRY"
+		     DISPLAY "            0 SATISFIED"
+		     DISPLAY "            1 FULL"
+		     DISPLAY "            2 STUFFED"
+		     DISPLAY "ENTER SCORE: " WITH NO ADVANCING
+		     ACCEPT HUNGER OF WS-LOG-OUT-REC
+
+		     MOVE WS-LOG-OUT-REC TO LOG-OUT-REC
+		     WRITE LOG-OUT-REC
+		     CLOSE LOG-OUT-DAT. 
+
+		     END PROGRAM FOODSEL.
+
